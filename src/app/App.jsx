@@ -1,12 +1,23 @@
-import { AuthPage } from "../features/auth/pages/AuthPage";
-
+import { AppRoutes } from "./router/AppRoutes";
+import { Toaster } from "react-hot-toast";
 
 function App() {
 
   return(
     <>
-      <h1>Hola mundo</h1>
-      <AuthPage />
+      <Toaster
+      position="top-center"
+      toastOptions={{
+        style: {
+          fontFamily:"inherit",
+          fontWeight: "600",
+          fontSize: "1rem",
+          borderRadius: "8px",
+        }
+      }}
+      />
+
+      <AppRoutes />
     </>
   )
 }
