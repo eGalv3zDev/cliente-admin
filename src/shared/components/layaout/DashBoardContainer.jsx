@@ -4,7 +4,7 @@ import { Sidebar } from "./Sidebar";
 // VISTAS
 
 // features/auth
-import { Spinner } from "@material-tailwind/react";
+//import { Spinner } from "@material-tailwind/react";
 import { ResetPasswordForm } from "../../../features/auth/components/ResetPasswordForm";
 //import { ShowConfirmToast } from "../../../features/auth/components/ShowConfirmToast";
 
