@@ -3,7 +3,7 @@ import { LoginForm } from "../components/LoginForm";
 import { ForgotPasswordForm } from "../components/ForgotPasswordForm";
 
 const AuthPage = () => {
-    const [isForgot, setIsForgot] = useState(true) // Pantalla Olvide mi contraseña
+    const [isForgot, setIsForgot] = useState(false) // Pantalla Olvide mi contraseña
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">

@@ -1,32 +1,32 @@
-import { axiosAuth } from './api';
-
+import { axiosAuth } from "./api";
+ 
 export const login = async (data) => {
-    return await axiosAuth.post('/auth/login', data);
+    return await axiosAuth.post("/api/v1/Auth/login", data);
 };
-
-export const register = async () => {
-    return await axiosAuth.post('/auth/register', data, {
-        Headers: {"Content-Type": "multipart/form-data"}
+ 
+export const register = async (data) => {
+    return await axiosAuth.post("/api/v1/Auth/register", data, {
+        headers: { "Content-Type": "multipart/form-data" }
     });
 };
-
+ 
 export const forgotPassword = async (email) => {
-    return await axiosAuth.post('/auth/forgot-password', { email });
+    return await axiosAuth.post("/api/v1/Auth/forgot-password", { email });
 };
-
+ 
 export const resetPassword = async (token, newPassword) => {
-    return await axiosAuth.post('/auth/reset-password', { token, newPassword });
+    return await axiosAuth.post("/api/v1/Auth/reset-password", { token, newPassword });
 };
-
+ 
 export const verifyEmail = async (token) => {
-    return await axiosAuth.post('/auth/verify-email', { token });
+    return await axiosAuth.post("/api/v1/Auth/verify-email", { token });
 };
-
+ 
 export const updateUserRole = async (userId, roleName) => {
-    return await axiosAuth.put(`/auth/users/${userId}/role`, { roleName });
+    return await axiosAuth.put(`/api/v1/Auth/users/${userId}/role`, { roleName });
 };
-
+ 
 export const getAllUsers = async () => {
-    const { data } = await axiosAuth.get('/auth/users');
-    return {users: data};
+    const { data } = await axiosAuth.get("/api/v1/Auth/users");
+    return { users: data };
 };

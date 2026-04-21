@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useAuthStore } from "../../features/auth/authStore.js";
+import { useAuthStore } from "../../features/auth/store/authStore.js";
 
 const axiosAuth = axios.create({
     baseURL: import.meta.env.VITE_AUTH_URL,
@@ -14,7 +14,7 @@ axiosAuth.interceptors.request.use( (config)=>{
     config._axiosClient = "auth";
     const token = useAuthStore.getState().token;
     if(token){
-        config.headers.Authorization = `Bearer.${token}`;
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
 } );
@@ -103,8 +103,9 @@ const handleRefreshToken = async function (_error) {
  
 axiosAuth.interceptors.response.use((res) => res, handleRefreshToken);
  
-axiosAdmin.interceptors.response.use((res) => res, handleRefreshToken);
+//axiosAdmin.interceptors.response.use((res) => res, handleRefreshToken);
  
 // ================= EXPORT AXIOS =================
-export { axiosAuth, axiosAdmin };
+//export { axiosAuth, axiosAdmin };
+export { axiosAuth };
 export { handleRefreshToken };
