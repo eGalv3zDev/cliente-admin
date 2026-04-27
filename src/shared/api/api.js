@@ -10,8 +10,25 @@ const axiosAuth = axios.create({
     }
 });
 
+const axiosAdmin = axios.create({
+    baseURL: import.meta.env.VITE_ADMIN_RUL,
+    timeout: 80000,
+    headers:{
+        "Content-Type": "Application/json",
+    }
+});
+
 axiosAuth.interceptors.request.use( (config)=>{
     config._axiosClient = "auth";
+    const token = useAuthStore.getState().token;
+    if(token){
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+} );
+
+axiosAuth.interceptors.request.use( (config)=>{
+    config._axiosClient = "admin";
     const token = useAuthStore.getState().token;
     if(token){
         config.headers.Authorization = `Bearer ${token}`;
@@ -101,11 +118,9 @@ const handleRefreshToken = async function (_error) {
   return Promise.reject(_error);
 };
  
-axiosAuth.interceptors.response.use((res) => res, handleRefreshToken);
- 
-//axiosAdmin.interceptors.response.use((res) => res, handleRefreshToken);
+axiosAuth.interceptors.response.use((res) => res, handleRefreshToken); 
+axiosAdmin.interceptors.response.use((res) => res, handleRefreshToken);
  
 // ================= EXPORT AXIOS =================
-//export { axiosAuth, axiosAdmin };
-export { axiosAuth };
+export { axiosAuth, axiosAdmin };
 export { handleRefreshToken };
