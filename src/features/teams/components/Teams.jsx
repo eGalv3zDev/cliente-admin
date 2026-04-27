@@ -110,7 +110,7 @@ export const Teams = () => {
             </div>
 
             {/* MODAL (siempre visible en UI pura) */}
-            <TeamModal />
+            {/* <TeamModal /> */}
         </div>
     );
 };

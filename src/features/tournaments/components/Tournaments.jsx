@@ -65,7 +65,7 @@ export const Tournaments = () => {
             </div>
 
             {/* MODAL (solo visual) */}
-            <TournamentModal isOpen={false} />
+            {/* <TournamentModal isOpen={false} /> */}
         </div>
     );
 };
