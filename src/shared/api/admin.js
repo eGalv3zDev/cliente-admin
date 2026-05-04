@@ -23,15 +23,11 @@ export const getTeams = async () => {
 };
  
 export const createTeam = async (data) => {
-    return await axiosAdmin.post("/teams", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
+    return await axiosAdmin.post("/teams", data);
 };
  
 export const updateTeam = async (id, data) => {
-    return await axiosAdmin.put(`/teams/${id}`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
+    return await axiosAdmin.put(`/teams/${id}`, data);
 };
  
 export const deleteTeam = async (id) => {
@@ -44,15 +40,11 @@ export const getFields = async () => {
 };
  
 export const createField = async (data) => {
-    return await axiosAdmin.post("/fields", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
+    return await axiosAdmin.post("/fields", data);
 };
  
 export const updateField = async (id, data) => {
-    return await axiosAdmin.put(`/fields/${id}`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
+    return await axiosAdmin.put(`/fields/${id}`, data);
 };
  
 export const deleteField = async (id) => {

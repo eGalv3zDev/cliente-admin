@@ -1,31 +1,55 @@
-import { useFieldsStore} from '../../users/store/adminStore';
+import { useFieldsStore } from "../../users/store/adminStore";
 
 export const useSaveField = () => {
+  const createField = useFieldsStore((state) => state.createField);
+  const updateField = useFieldsStore((state) => state.updateField);
 
-    // Recuperacion de funciones para el hook
-    const createField = useFieldsStore((state)=> state.createField);
-    const updateField = useFieldsStore((state)=> state.updateField);
+  const saveField = async (data, fieldId = null) => {
+    const normalizedFieldType = (data.fieldType || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-    const saveField = async (data, fieldId = null ) => {
+    const fieldTypeMap = {
+      CESPED_ARTIFICIAL: "SINTETICA",
+      CESPED_NATURAL: "NATURAL",
+      SINTETICA: "SINTETICA",
+      NATURAL: "NATURAL",
+      CONCRETO: "CONCRETO",
+      ARENA: "ARENA",
+    };
 
-        const formData = new FormData();
-        formData.append("fieldName", data.fieldName);
-        formData.append("fieldType", data.fieldType);
-        formData.append("capacity", data.capacity);
-        formData.append("pricePerHour", data.pricePerHour);
-        formData.append("description", data.description);
+    const backendFieldType = fieldTypeMap[normalizedFieldType] || normalizedFieldType;
 
-        if(data.photo?.length > 0){
-            formData.append("image", data.photo[0]);
-        }
+    const payload = {
+      fieldName: (data.fieldName || "").trim(),
+      fieldType: backendFieldType,
+      capacity: data.capacity,
+      pricePerHour: Number(data.pricePerHour),
+      description: (data.description || "").trim(),
+    };
 
-        if (fieldId) {
-            await updateField(fieldId, formData);
-        } else {
-            await createField(formData);
-        }
+    let body = payload;
+    const hasPhoto = data.photo?.length > 0;
+
+    if (hasPhoto) {
+      const formData = new FormData();
+      formData.append("fieldName", payload.fieldName);
+      formData.append("fieldType", payload.fieldType);
+      formData.append("capacity", payload.capacity);
+      formData.append("pricePerHour", String(payload.pricePerHour));
+      formData.append("description", payload.description);
+
+      // El backend de este proyecto expone la URL en `photo`.
+      formData.append("photo", data.photo[0]);
+      body = formData;
     }
 
-    return { saveField };
+    if (fieldId) {
+      await updateField(fieldId, body);
+    } else {
+      await createField(body);
+    }
+  };
 
-}
+  return { saveField };
+};

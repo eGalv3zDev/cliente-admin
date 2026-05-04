@@ -27,7 +27,7 @@ axiosAuth.interceptors.request.use( (config)=>{
     return config;
 } );
 
-axiosAuth.interceptors.request.use( (config)=>{
+axiosAdmin.interceptors.request.use( (config)=>{
     config._axiosClient = "admin";
     const token = useAuthStore.getState().token;
     if(token){
