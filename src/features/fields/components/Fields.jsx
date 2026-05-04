@@ -8,6 +8,20 @@ import { showError } from "../../../shared/utils/toast.js";
 import { Spinner } from "../../auth/components/Spinner.jsx";
 import { FieldModal } from "./FieldModal.jsx";
 
+const CLOUDINARY_CLOUD_NAME = "dog2q2ise";
+const CLOUDINARY_FIELD_FOLDER_PREFIX = "kinalSports";
+
+const resolveFieldImageUrl = (photoPath) => {
+  if (!photoPath) return "";
+
+  if (/^https?:\/\//i.test(photoPath)) {
+    return photoPath;
+  }
+
+  const normalizedPath = String(photoPath).replace(/^\/+/, "");
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${CLOUDINARY_FIELD_FOLDER_PREFIX}/${normalizedPath}`;
+};
+
 export const Fields = () => {
 
   // STORE
@@ -68,7 +82,7 @@ export const Fields = () => {
             {/* IMAGEN */}
             <div className="w-full h-52 bg-gray-100 flex items-center justify-center">
               <img
-                src={field.photo}
+                src={resolveFieldImageUrl(field.photo)}
                 alt={field.fieldName}
                 className="max-h-full max-w-full object-contain rounded-t-xl"
               />

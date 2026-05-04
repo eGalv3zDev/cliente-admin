@@ -6,6 +6,20 @@ import { Spinner } from "../../auth/components/Spinner";
 import { useSaveField } from "../hooks/useSaveField";
 import { showSuccess, showError } from "../../../shared/utils/toast";
 
+const CLOUDINARY_CLOUD_NAME = "dog2q2ise";
+const CLOUDINARY_FIELD_FOLDER_PREFIX = "kinalSports";
+
+const resolveFieldImageUrl = (photoPath) => {
+    if (!photoPath) return "";
+
+    if (/^https?:\/\//i.test(photoPath)) {
+        return photoPath;
+    }
+
+    const normalizedPath = String(photoPath).replace(/^\/+/, "");
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${CLOUDINARY_FIELD_FOLDER_PREFIX}/${normalizedPath}`;
+};
+
 export const FieldModal = ({isOpen, onClose, field}) => {
 
     const {
@@ -31,7 +45,7 @@ export const FieldModal = ({isOpen, onClose, field}) => {
                     pricePerHour: field.pricePerHour,
                     description: field.description,
                 });
-                setPreview(field.photo);
+                setPreview(resolveFieldImageUrl(field.photo));
             }else {
                 reset({
                     fieldName: "",
