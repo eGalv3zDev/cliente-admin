@@ -77,12 +77,10 @@ export const useFieldsStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
  
-      const response = await createFieldRequest(formData);
- 
-      set({
-        fields: [response.data.data, ...get().fields],
-        loading: false,
-      });
+      await createFieldRequest(formData);
+      // Refrescar lista para obtener la ruta final de la imagen desde backend
+      await get().getFields();
+      set({ loading: false });
     } catch (error) {
       console.error("[createField] API error", {
         status: error?.response?.status,
@@ -106,16 +104,10 @@ export const useFieldsStore = create((set, get) => ({
   updateField: async (id, formData) => {
     try {
       set({ loading: true, error: null });
-
-      const response = await updateFieldRequest(id, formData);
-      const updatedField = response.data.data;
-
-      set({
-        fields: get().fields.map((field) =>
-          field._id === id ? updatedField : field
-        ),
-        loading: false,
-      });
+      await updateFieldRequest(id, formData);
+      // Refrescar lista para obtener la ruta final de la imagen desde backend
+      await get().getFields();
+      set({ loading: false });
     } catch (error) {
       console.error("[updateField] API error", {
         status: error?.response?.status,

@@ -39,8 +39,8 @@ export const useSaveField = () => {
       formData.append("pricePerHour", String(payload.pricePerHour));
       formData.append("description", payload.description);
 
-      // El backend de este proyecto expone la URL en `photo`.
-      formData.append("photo", data.photo[0]);
+      // El middleware del backend espera el campo `image` para el archivo.
+      formData.append("image", data.photo[0]);
       body = formData;
     }
 
