@@ -1,4 +1,82 @@
-export const FieldModal = () => {
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { useFieldsStore } from "../../users/store/adminStore";
+
+import { spinner } from "@material-tailwind/react";
+import { useSaveField } from "../hooks/useSaveField";
+import { showSuccess, showError } from "../../../shared/utils/toast";
+
+export const FieldModal = ({isOpen, onClose, field}) => {
+
+    //Formulario
+    const {
+        register,
+        handleSubmit,
+        reset,
+        watch,
+        formState: {errors},
+    } = useForm();
+
+    const { SaveField } = useSaveField();
+    const loading = useFieldsStore((state)=> state.loading);
+
+    const [preview, setPreview ] = useState(null);
+
+    useEffect(() => {
+        if(isOpen){
+            if(field){
+                reset({
+                    fieldName: field.fieldName,
+                    fieldType: field.fieldType,
+                    capacity: field.capacity,
+                    pricePerHour: field.pricePerHour,
+                    description: field.description,
+                });
+                setPreview(field.photo);
+            }else {
+                reset({
+                    fieldName: "",
+                    fieldType: "",
+                    capacity: "",
+                    pricePerHour: "",
+                    description: "",
+                });
+                setPreview(null);
+            }
+        }
+    },[isOpen, field, reset]);
+
+    useEffect(() => {
+        const subscription = watch((value, { name }) => {
+            if (name == "photo" && value.photo && value.photo.length > 0) {
+                setPreview(URL.createObjectURL(value.photo[0]));
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [watch]);
+
+    const onSubmit = async (data) => {
+
+        try {
+            await SaveField(data, field?._id);
+            showSuccess(
+                field
+                ? "Campo Actualizaco Correctamente"
+                : "Campo Creado Correctamente"
+            );
+            reset();
+            setPreview(null);
+            onClose();
+
+        } catch (error) {
+            showError("Error al guardar el campo")
+        }
+
+    }
+
+    if (!isOpen) return null;
+
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 px-3 sm:px-4">
             {/* CONTENEDOR */}
