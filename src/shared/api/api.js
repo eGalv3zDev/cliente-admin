@@ -11,7 +11,7 @@ const axiosAuth = axios.create({
 });
 
 const axiosAdmin = axios.create({
-    baseURL: import.meta.env.VITE_ADMIN_RUL,
+    baseURL: import.meta.env.VITE_ADMIN_URL,
     timeout: 80000,
     headers:{
         "Content-Type": "Application/json",
