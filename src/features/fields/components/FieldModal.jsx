@@ -26,10 +26,13 @@ export const FieldModal = ({ isOpen, onClose, field }) => {
           fieldName: field.fieldName,
           fieldType: field.fieldType,
           capacity: field.capacity,
+          
           pricePerHour: field.pricePerHour,
           description: field.description,
         });
-        setPreview(field.photo);
+        setPreview(
+          `https://res.cloudinary.com/dog2q2ise/image/upload/v1777994167/kinalSports/${field.photo}`
+        );
       } else {
         reset({
           fieldName: "",

@@ -61,7 +61,7 @@ return (
                     {/* IMAGEN */}
                     <div className="w-full h-52 bg-gray-100 flex items-center justify-center">
                     <img
-                        src={`https://res.cloudinary.com/dktwa0obs/image/upload/v1777913827/kinal_sports/${field.photo}`}
+                        src={`https://res.cloudinary.com/dog2q2ise/image/upload/v1777994167/kinalSports/${field.photo}`}
                         alt={field.fieldName}
                         className="max-h-full max-w-full object-contain rounded-t-xl"
                     />
